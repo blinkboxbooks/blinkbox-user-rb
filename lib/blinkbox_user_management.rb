@@ -13,7 +13,7 @@ module UserManagement
 				"password" => password
 			}
 			http_send :post, "/oauth2/token",params
-			@attributes = MultiJson.load(HttpCapture::RESPONSES.last.body)
+			@attributes = MultiJson.load(get_last_response.body)
 			if @attributes['error']
 				raise "An error occured => #{@attributes['error']}"
 			end
@@ -34,7 +34,7 @@ module UserManagement
 		end
 		def get_clients
 			http_send :get, "/clients",{},get_token
-			MultiJson.load(HttpCapture::RESPONSES.last.body)["clients"]
+			MultiJson.load(get_last_response.body)["clients"]
 		end
 		def delete_client uri
 			http_call(:delete,uri,{},get_token)	
@@ -45,11 +45,14 @@ module UserManagement
 			end
 		end
 		private
+		def get_last_response
+			HttpCapture::RESPONSES.last
+		end
 		def http_call(verb, uri, params = {}, access_token = nil)
 			headers = { "Accept" => "application/json" }.merge(@headers)
 			headers["Authorization"] = "Bearer #{access_token}" if access_token
 			self.class.send(verb, uri.to_s, headers: headers, query: params)
-			HttpCapture::RESPONSES.last
+			get_last_response
 		end
 		def http_send(verb, uri, body_params, access_token = nil)
 			headers = { "Accept" => "application/json", "Content-Type" => "application/x-www-form-urlencoded" }.merge(@headers)
@@ -57,7 +60,7 @@ module UserManagement
 			body_params.reject! { |k, v| v.nil? }
 			body_params = URI.encode_www_form(body_params) unless body_params.is_a?(String)
 			self.class.send(verb, uri.to_s, headers: headers, body: body_params)
-			HttpCapture::RESPONSES.last
+			get_last_response
 		end
 	end
 end
