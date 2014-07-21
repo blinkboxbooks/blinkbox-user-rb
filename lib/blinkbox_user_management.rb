@@ -14,6 +14,9 @@ module UserManagement
 			}
 			http_send :post, "/oauth2/token",params
 			@attributes = MultiJson.load(HttpCapture::RESPONSES.last.body)
+			if @attributes['error']
+				raise "An error occured => #{@attributes['error']}"
+			end
 		end
 		def has_attribute? key
 			@attributes.has_key? key
