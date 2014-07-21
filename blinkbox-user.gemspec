@@ -3,13 +3,13 @@ lib = File.join(__dir__,'lib')
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
-	spec.name          = "blinkbox_user_management"
+	spec.name          = "blinkbox-user"
 	spec.version       = ::File.read("VERSION")
 	spec.authors       = ["blinkbox books"]
-	spec.email         = ["alexjo@blinkbox.com"]
+	spec.email         = ["alexjo@blinkbox.com", "mustaqila@blinkbox.com"]
 	spec.description   = %q{blinkbox ruby user management api}
 	spec.summary       = %q{blinkbox ruby user management api}
-	spec.homepage      = "https://git.mobcastdev.com/alexjo/blinkbox_user_management"
+	spec.homepage      = "https://git.mobcastdev.com/TEST/blinkbox-user"
 	spec.license       = "MIT"
 
 	spec.files         = [*Dir["{lib,bin,spec}/**/*.rb"], "VERSION"]
