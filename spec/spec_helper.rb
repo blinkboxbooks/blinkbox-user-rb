@@ -1,2 +1,2 @@
-require 'require_all'
-require_all File.expand_path("../lib",File.dirname(__FILE__))
+$:<<File.join(File.dirname(__FILE__),'../lib')
+require 'blinkbox-user'
