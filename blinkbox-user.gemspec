@@ -14,12 +14,12 @@ Gem::Specification.new do |spec|
 
 	spec.files         = [*Dir["{lib,bin,spec}/**/*.rb"], "VERSION"]
 	spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-	spec.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
+	spec.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
 	spec.require_paths = ["lib"]
 
 	spec.add_runtime_dependency "httparty"
 	spec.add_runtime_dependency "multi_json"
 
-  spec.add_development_dependency "bundler", "~> 1.3"
-  spec.add_development_dependency "rake", "~> 10.1"
+	spec.add_development_dependency "bundler", "~> 1.3"
+	spec.add_development_dependency "rake", "~> 10.1"
 end
