@@ -19,7 +19,8 @@ Gem::Specification.new do |spec|
 
 	spec.add_runtime_dependency "httparty"
 	spec.add_runtime_dependency "multi_json"
-	
+
+	spec.add_development_dependency "httparty"	
 	spec.add_development_dependency "rspec"
 	spec.add_development_dependency "bundler", "~> 1.3"
 	spec.add_development_dependency "rake", "~> 10.1"
