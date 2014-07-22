@@ -1,3 +1,4 @@
-gem 'httparty'
-gem 'multi_json'
-gem 'rspec'
+source "http://artifactory.blinkbox.local/artifactory/api/gems/bbb-gems/"
+source "http://artifactory.blinkbox.local/artifactory/api/gems/rubygems/"
+
+gemspec
