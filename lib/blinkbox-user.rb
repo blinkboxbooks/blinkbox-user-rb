@@ -2,7 +2,7 @@ require 'httparty'
 require 'multi_json'
 require 'net/http/capture'
 
-class BlinkboxUser
+class BlinkBoxUser
 	include HTTParty
 
 	attr_accessor :headers
@@ -10,7 +10,7 @@ class BlinkboxUser
 	def initialize(server_uri, proxy_uri = nil)
 		self.class.base_uri(server_uri.to_s)
 		self.class.http_proxy(proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password) if proxy_uri
-		self.class.debug_output($stderr) if TEST_CONFIG[:debug]
+		self.class.debug_output($stderr)
 		@headers = {}
 	end
 
@@ -160,5 +160,4 @@ class BlinkboxUser
 		#File.open("last_response_send.html", "w") { |f| f.write(HttpCapture::RESPONSES.last.body) }
 		HttpCapture::RESPONSES.last
 	end
-
 end

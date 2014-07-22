@@ -1,2 +1,3 @@
-gem "httparty"
-gem "multi_json"
+gem 'httparty'
+gem 'multi_json'
+gem 'rspec'
