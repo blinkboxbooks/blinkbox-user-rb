@@ -2,7 +2,7 @@ require 'httparty'
 require 'multi_json'
 require 'net/http/capture'
 
-class BlinkBoxUser
+class BlinkboxUser
 	include HTTParty
 
 	attr_accessor :headers
