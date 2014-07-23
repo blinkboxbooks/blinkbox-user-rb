@@ -1,8 +1,5 @@
 require_relative 'blinkbox-client'
 
-#Blinkbox::ClientApi::Settings.client_settings({:server_uri => "nothing"})
-#u = Blinkbox::ClientApi::User.new({:username => "test", :password => "password"})
-
 module Blinkbox
   module ClientApi
     module Settings
