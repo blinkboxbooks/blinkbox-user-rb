@@ -9,7 +9,6 @@ module Blinkbox
         def initialize params
           @server_uri = params[:server_uri] || "https://auth.blinkboxbooks.com"
           @proxy_uri = params[:proxy_uri] || nil
-          @http_auth = params[:http_method]
         end
       end
     end
@@ -28,11 +27,12 @@ module Blinkbox
         @attributes = last_response({:format => "json"})
       end
       def last_response params={}
+        return nil if !params
         case params[:format]
         when "json"
           MultiJson.load(HttpCapture::RESPONSES.last.body)
         else
-          HttpCapture::RESPONSES.last
+          HttpCapture::RESPONSES.last.body
         end
       end
       def method_missing(name, *args, &blk)
