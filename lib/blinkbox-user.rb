@@ -18,6 +18,7 @@ module Blinkbox
       def initialize params
         @user_credentials = params
         @attributes = {}
+        @action_queue = []
         super Settings::ActiveSettings.client_settings.server_uri,
         Settings::ActiveSettings.client_settings.proxy_uri
       end
@@ -29,7 +30,7 @@ module Blinkbox
         if args.empty? && blk.nil? && @attributes.has_key?(name.to_s)
           @attributes[name.to_s]
         else
-          raise "Could not find attribute => %s" % (name)
+          super
         end
       end
     end
