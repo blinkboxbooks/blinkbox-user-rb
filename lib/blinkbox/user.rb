@@ -16,23 +16,27 @@ module Blinkbox
 		def initialize params
 			@user_credentials = params
 			@attributes = {}
-			@zuul_client = ZuulClient.new Settings.client_settings.server_uri,
+			if !params[:http_client]	
+			@client = ZuulClient.new Settings.client_settings.server_uri,
 				Settings.client_settings.proxy_uri
-			@zuul_client.authenticate(@user_credentials)
+			else
+				@client = params[:http_client]
+			end
+			@client.authenticate(@user_credentials)
 			@attributes = last_response({:format => "json"})
 		end
 		def get_token
 			@attributes['access_token']
 		end
 		def get_clients
-			@zuul_client.get_clients_info get_token
+			@client.get_clients_info get_token
 			last_response({:format => "json"})['clients']
 		end
 		def register_client params
-			@zuul_client.register_client(params,get_token)
+			@client.register_client(params,get_token)
 		end
 		def deregister_client uri,token
-			@zuul_client.deregister_client uri,token 
+			@client.deregister_client uri,token 
 		end
 		def deregister_client_all 
 			get_clients.each do | client |
@@ -40,7 +44,6 @@ module Blinkbox
 				puts client['client_id']
 			end
 		end
-		private
 		def last_response params={}
 			return nil if !params
 			case params[:format]
