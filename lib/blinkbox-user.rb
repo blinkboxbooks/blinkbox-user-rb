@@ -21,16 +21,23 @@ module Blinkbox
 			@zuul_client.authenticate(@user_credentials)
 			@attributes = last_response({:format => "json"})
 		end
+		def get_token
+			@attributes['access_token']
+		end
 		def get_clients
-			@zuul_client.get_clients_info(@attributes['access_token'])
-			last_response({:format => "json"})
+			@zuul_client.get_clients_info get_token
+			last_response({:format => "json"})['clients']
+		end
+		def register_client params
+			@zuul_client.register_client(params,get_token)
 		end
 		def deregister_client uri,token
 			@zuul_client.deregister_client uri,token 
 		end
 		def deregister_client_all 
-			get_clients['clients'].each do | client |
-				deregister_client client['client_id'],@attributes['access_token'] 
+			get_clients.each do | client |
+				deregister_client client['client_id'],get_token 
+				puts client['client_id']
 			end
 		end
 		private
