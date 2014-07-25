@@ -1,7 +1,8 @@
 PATH
   remote: .
   specs:
-    blinkbox-user (0.0.2)
+    blinkbox-user (0.0.3)
+      http_capture
       httparty
       multi_json
 
@@ -10,6 +11,7 @@ GEM
   remote: http://artifactory.blinkbox.local/artifactory/api/gems/rubygems/
   specs:
     diff-lcs (1.2.5)
+    http_capture (0.2.0)
     httparty (0.13.1)
       json (~> 1.8)
       multi_xml (>= 0.5.2)

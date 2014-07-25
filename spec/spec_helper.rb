@@ -1,3 +1,6 @@
 $:<<File.join(File.dirname(__FILE__),'../lib')
-require 'blinkbox-client'
-require 'blinkbox-user'
+
+SERVER_URI='https://auth.blinkboxbooks.com'
+
+require 'blinkbox/client'
+require 'blinkbox/user'

@@ -1,4 +1,4 @@
-require_relative 'blinkbox-client'
+require_relative 'client'
 
 module Blinkbox
 	class Settings
