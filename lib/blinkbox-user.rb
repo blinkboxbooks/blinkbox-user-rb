@@ -16,7 +16,6 @@ module Blinkbox
 		def initialize params
 			@user_credentials = params
 			@attributes = {}
-			@action_queue = []
 			@zuul_client = ZuulClient.new Settings.client_settings.server_uri,
 				Settings.client_settings.proxy_uri
 			@zuul_client.authenticate(@user_credentials)
