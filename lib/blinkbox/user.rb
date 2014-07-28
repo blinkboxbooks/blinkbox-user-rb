@@ -23,7 +23,11 @@ module Blinkbox
 				@client = params[:http_client]
 			end
 			@client.authenticate(@user_credentials)
-			res = last_response({:format => "json"})
+			if !params[:custom_datasource]
+				res = last_response({:format => "json"})
+			else
+				res = params[:custom_datasource]
+			end
 			res.keys.each do | key |
 				instance_eval %Q{
 				@#{key} = "#{res[key]}"
@@ -45,7 +49,7 @@ module Blinkbox
 		def deregister_client_all	
 			get_clients.each do | client |
 				localid = client['client_id'].split(":").last
-				deregister_client localid 
+			deregister_client localid 
 			end
 		end
 		def last_response params={}
