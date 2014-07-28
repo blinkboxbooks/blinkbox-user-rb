@@ -39,12 +39,13 @@ module Blinkbox
 		def register_client params
 			@client.register_client params,@access_token
 		end
-		def deregister_client uri
-			@client.deregister_client_uri uri, @access_token 
+		def deregister_client client_id
+			@client.deregister_client client_id, @access_token 
 		end
 		def deregister_client_all	
 			get_clients.each do | client |
-				deregister_client client['client_uri']
+				localid = client['client_id'].split(":").last
+				deregister_client localid 
 			end
 		end
 		def last_response params={}

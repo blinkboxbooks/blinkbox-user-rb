@@ -64,9 +64,7 @@ module Blinkbox
 		def validate_password_reset_token(params)
 			http_post "/password/reset/validate-token", params
 		end
-		def deregister_client_uri client_uri, access_token
-			http_delete client_uri, {}, access_token 
-		end
+		
 		def deregister_client(client_id, access_token)
 			http_delete "/clients/#{client_id}", {}, access_token
 		end
