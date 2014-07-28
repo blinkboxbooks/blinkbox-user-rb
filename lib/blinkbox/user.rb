@@ -16,11 +16,11 @@ module Blinkbox
 		def initialize params
 			@user_credentials = params
 			@attributes = {}
-			if !params[:http_client]	
+			if !params[:custom_http_client]	
 				@client = ZuulClient.new Settings.client_settings.server_uri,
 					Settings.client_settings.proxy_uri
 			else
-				@client = params[:http_client]
+				@client = params[:custom_http_client]
 			end
 			@client.authenticate(@user_credentials)
 			if !params[:custom_datasource]
