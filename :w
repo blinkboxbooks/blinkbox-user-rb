@@ -26,29 +26,27 @@ module Blinkbox
 			res = last_response({:format => "json"})
 			res.keys.each do | key |
 				instance_eval %Q{
-				@#{key} = "#{res[key]}"
-				User.class_eval{attr_reader :#{key} }
-				puts "Storing @#{key} with value => #{res[key]}"
+				attr_reader :#{key}
 			}
 			end
 		end
 		def get_clients
-			@client.get_clients_info @access_token
-			last_response({:format => "json"})['clients']	
+			@client.get_clients_info access_token
+			last_response({:format => "json"})['clients']
 		end
 		def register_client params
-			@client.register_client params,@access_token
+			@client.register_client(params,access_token)
 		end
-		def deregister_client uri
-			@client.deregister_client uri, @access_token 
+		def deregister_client uri,access_token
+			@client.deregister_client uri,access_token 
 		end
-		def deregister_client_all	
+		def deregister_client_all 
 			get_clients.each do | client |
-				deregister_client client['client_id']
+				deregister_client client['client_id'],access_token 
+			puts client['client_id']
 			end
 		end
 		def last_response params={}
-			return nil if HttpCapture::RESPONSES.last.body.empty?
 			return nil if !params
 			case params[:format]
 			when "json"
