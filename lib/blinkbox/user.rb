@@ -12,10 +12,8 @@ module Blinkbox
 		@configuration ||= Settings.new params
 	end
 	class User
-		attr_reader :attributes
 		def initialize params
 			@user_credentials = params
-			@attributes = {}
 			if !params[:custom_http_client]	
 				@client = ZuulClient.new Settings.client_settings.server_uri,
 					Settings.client_settings.proxy_uri
