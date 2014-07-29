@@ -10,7 +10,7 @@ module Blinkbox
 		end
 	end
 
-	def client_settings(params ={} )
+	def client_settings(params = {})
 		@configuration ||= Settings.new(params)
 	end
 end
@@ -18,7 +18,7 @@ end
 module Blinkbox
 	class User
 
-		def initialize (params, client=ZuulClient)
+		def initialize (params, client = ZuulClient)
 			@user_credentials = params
 
 			@client = client.new(Settings.client_settings.server_uri,
