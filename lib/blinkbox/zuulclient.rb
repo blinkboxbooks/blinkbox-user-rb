@@ -124,7 +124,19 @@ module Blinkbox
 		def admin_get_user_info(user_id, access_token)
 			http_get "/admin/users/#{user_id}", {}, access_token
 		end
-
+		
+		def last_response params={}
+			res = HttpCapture::RESPONSES.last
+			return nil if res.body.empty?
+			raise "Requires format parameter" if !params[:format]
+			case params[:format]
+			when "json"
+				MultiJson.load(res.body)
+			else
+				res
+			end
+		end
+		
 		private
 
 		def http_get(uri, params = {}, access_token = nil)
@@ -159,16 +171,6 @@ module Blinkbox
 			self.class.send(verb, uri.to_s, headers: headers, body: body_params)
 			#File.open("last_response_send.html", "w") { |f| f.write(HttpCapture::RESPONSES.last.body) }
 			HttpCapture::RESPONSES.last
-		end
-		def last_response params={}
-			return nil if HttpCapture::RESPONSES.last.body.empty?
-			return nil if !params
-			case params[:format]
-			when "json"
-				MultiJson.load(HttpCapture::RESPONSES.last.body)
-			else
-				HttpCapture::RESPONSES.last.body
-			end
 		end
 	end
 end
