@@ -1,4 +1,4 @@
-require_relative 'client'
+require_relative 'zuulclient'
 
 module Blinkbox
 	class Settings

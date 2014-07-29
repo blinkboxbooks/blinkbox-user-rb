@@ -1,5 +1,5 @@
 require_relative '../spec_helper'
-
+require_relative '../../lib/blinkbox/zuulclient'
 include Blinkbox
 
 describe ZuulClient.new(SERVER_URI,nil) do
