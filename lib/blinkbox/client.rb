@@ -64,7 +64,7 @@ module Blinkbox
 		def validate_password_reset_token(params)
 			http_post "/password/reset/validate-token", params
 		end
-		
+
 		def deregister_client(client_id, access_token)
 			http_delete "/clients/#{client_id}", {}, access_token
 		end
@@ -159,6 +159,16 @@ module Blinkbox
 			self.class.send(verb, uri.to_s, headers: headers, body: body_params)
 			#File.open("last_response_send.html", "w") { |f| f.write(HttpCapture::RESPONSES.last.body) }
 			HttpCapture::RESPONSES.last
+		end
+		def last_response params={}
+			return nil if HttpCapture::RESPONSES.last.body.empty?
+			return nil if !params
+			case params[:format]
+			when "json"
+				MultiJson.load(HttpCapture::RESPONSES.last.body)
+			else
+				HttpCapture::RESPONSES.last.body
+			end
 		end
 	end
 end
