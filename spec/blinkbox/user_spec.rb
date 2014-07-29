@@ -19,46 +19,45 @@ TESTDATA = { :access_token => "eyJraWQiOiJibGlua2JveC9wbGF0L2VuYy9yc2EvMSIsImN0e
 	:user_username => "calabash_test@gmail.com",
 	:user_first_name => "Firstname",
 	:user_last_name => "Lastname"
-	}
+}
 
-	class MockClient
-		def initialize server_uri,proxy_uri
-		end
-
-		def authenticate credentials
-
-		end
-
-		def last_response params={}
-			return TESTDATA
-		end
+class MockClient
+	def initialize(server_uri, proxy_uri)
 	end
 
-	describe client_settings do
-		it { is_expected.to respond_to(:server_uri) }
-		it { is_expected.to respond_to(:proxy_uri) }
+	def authenticate credentials
+
 	end
 
-	describe User.new({ :grant_type => "password",
-		:username => "test",:password => "password"}, MockClient ) do
-			it { is_expected.to respond_to(:get_clients) }
-			it { is_expected.to respond_to(:register_client).with(1).argument }
-			it { is_expected.to respond_to(:deregister_client).with(1).argument }
-			it { is_expected.to respond_to(:deregister_client_all)}
+	def last_response(params={})
+		return TESTDATA
+	end
+end
 
-			it "Should store authentication data" do
-				@user = User.new({ :grant_type => "password",
-					:username => "test",:password => "password"}, MockClient )
-					expect(@user.access_token).to eq(TESTDATA[:access_token])
-					expect(@user.token_type).to eq(TESTDATA[:token_type])
-					expect(@user.expires_in).to eq(TESTDATA[:expires_in].to_s)
-					expect(@user.user_id).to eq(TESTDATA[:user_id])
-					expect(@user.refresh_token).to eq(TESTDATA[:refresh_token])
-					expect(@user.user_id).to eq(TESTDATA[:user_id])
-					expect(@user.user_uri).to eq(TESTDATA[:user_uri])
-					expect(@user.user_username).to eq(TESTDATA[:user_username])
-					expect(@user.user_first_name).to eq(TESTDATA[:user_first_name])
-					expect(@user.user_last_name).to eq(TESTDATA[:user_last_name])
-				end
+describe client_settings do
+	it { is_expected.to respond_to(:server_uri) }
+	it { is_expected.to respond_to(:proxy_uri) }
+end
 
+describe User.new({ :grant_type => "password",
+	:username => "test",:password => "password"}, MockClient ) do
+		it { is_expected.to respond_to(:get_clients) }
+		it { is_expected.to respond_to(:register_client).with(1).argument }
+		it { is_expected.to respond_to(:deregister_client).with(1).argument }
+		it { is_expected.to respond_to(:deregister_client_all)}
+
+		it "Should store authentication data" do
+			@user = User.new({ :grant_type => "password",
+				:username => "test",:password => "password"}, MockClient )
+				expect(@user.access_token).to eq(TESTDATA[:access_token])
+				expect(@user.token_type).to eq(TESTDATA[:token_type])
+				expect(@user.expires_in).to eq(TESTDATA[:expires_in].to_s)
+				expect(@user.user_id).to eq(TESTDATA[:user_id])
+				expect(@user.refresh_token).to eq(TESTDATA[:refresh_token])
+				expect(@user.user_id).to eq(TESTDATA[:user_id])
+				expect(@user.user_uri).to eq(TESTDATA[:user_uri])
+				expect(@user.user_username).to eq(TESTDATA[:user_username])
+				expect(@user.user_first_name).to eq(TESTDATA[:user_first_name])
+				expect(@user.user_last_name).to eq(TESTDATA[:user_last_name])
 			end
+		end

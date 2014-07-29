@@ -124,7 +124,7 @@ module Blinkbox
 		def admin_get_user_info(user_id, access_token)
 			http_get "/admin/users/#{user_id}", {}, access_token
 		end
-		
+
 		def last_response params={}
 			res = HttpCapture::RESPONSES.last
 			return nil if res.body.empty?
@@ -136,7 +136,7 @@ module Blinkbox
 				res
 			end
 		end
-		
+
 		private
 
 		def http_get(uri, params = {}, access_token = nil)
