@@ -29,7 +29,7 @@ class MockClient
 
 	end
 
-	def last_response(params={})
+	def last_response(params={} )
 		return TESTDATA
 	end
 end
