@@ -1,5 +1,16 @@
 # Change log
 
+## 0.1.0 ([#5](https://git.mobcastdev.com/TEST/blinkbox-user/pull/5) 2014-07-28 14:51:24)
+
+Refactoring and improvements
+
+new feature
+
+- Split out user and client
+- User generates json data as instance variables
+- created high level API for device deregistering
+- Unit tests with mocks 
+
 ## 0.0.4 ([#4](https://git.mobcastdev.com/TEST/blinkbox-user/pull/4) 2014-07-24 10:56:45)
 
 Fix up the namespacing to be consistant with other Blinkbox libs/gems
