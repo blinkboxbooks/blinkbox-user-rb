@@ -1,2 +1,1 @@
-$:<<File.join(File.dirname(__FILE__),'../lib')
-require 'blinkbox/user'
+SERVER_URI='https://auth.blinkboxbooks.com'
