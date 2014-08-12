@@ -45,7 +45,7 @@ module Blinkbox
     end
 
     def deregister_client(client)
-        @client.deregister_client(client.id, @access_token)
+      @client.deregister_client(client.id, @access_token)
     end
 
     def deregister_client_all(devices)

@@ -8,6 +8,7 @@ module Blinkbox
       }
       end
     end
+
     def id
       @client_id ? @client_id.split(':').last : nil
     end
