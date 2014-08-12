@@ -37,6 +37,7 @@ module Blinkbox
       @client.last_response(:format => "json")['clients'].each do | dc |
         @device_clients << Device.new(dc)
       end
+      @device_clients
     end
 
     def register_client(params)
@@ -44,12 +45,12 @@ module Blinkbox
     end
 
     def deregister_client(client)
-      @client.deregister_client(client.id, @access_token)
+        @client.deregister_client(client.id, @access_token)
     end
 
-    def deregister_client_all
-      get_clients.each do | client |
-        deregister_client(client.id)
+    def deregister_client_all(devices)
+      devices.each do | client |
+        deregister_client(client)
       end
     end
   end
