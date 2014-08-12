@@ -1,4 +1,5 @@
 require_relative 'zuulclient'
+require_relative 'device'
 module Blinkbox
   class Settings
     attr_reader :server_uri, :proxy_uri
@@ -12,44 +13,43 @@ module Blinkbox
   def client_settings(params = {})
     @configuration ||= Settings.new(params)
   end
-end
 
-module Blinkbox
   class User
     def initialize(params, client = ZuulClient)
       @user_credentials = params
 
-      @client = client.new(Settings.client_settings.server_uri,
-                           Settings.client_settings.proxy_uri)
+      @client = client.new(Blinkbox::client_settings.server_uri, Blinkbox::client_settings.proxy_uri)
 
       @client.authenticate(@user_credentials)
       res  = @client.last_response(:format => "json")
 
       res.keys.each do | key |
         instance_eval %Q{
-                                        @#{key} = "#{res[key]}"
-                User.class_eval{attr_reader :#{key} }
-      }
+          @#{key} = "#{res[key]}"
+          User.class_eval{attr_reader :#{key} }
+        }
       end
     end
 
     def get_clients
       @client.get_clients_info @access_token
-      @client.last_response(:format => "json")['clients']
+      @device_clients = []
+      @client.last_response(:format => "json")['clients'].each do | dc |
+        @device_clients << Device.new(dc)
+      end
     end
 
     def register_client(params)
       @client.register_client(params, @access_token)
     end
 
-    def deregister_client(client_id)
-      @client.deregister_client(client_id, @access_token)
+    def deregister_client(client)
+      @client.deregister_client(client.id, @access_token)
     end
 
     def deregister_client_all
       get_clients.each do | client |
-        localid = client['client_id'].split(":").last
-        deregister_client(localid)
+        deregister_client(client.id)
       end
     end
   end
