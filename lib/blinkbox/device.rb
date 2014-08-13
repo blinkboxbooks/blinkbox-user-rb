@@ -1,9 +1,9 @@
 module Blinkbox
   class Device
-    def initialize(json)
-      json.keys.each do | key |
+    def initialize(hash)
+      hash.keys.each do | key |
         instance_eval %Q{
-        @#{key} = "#{json[key]}"
+        @#{key} = "#{hash[key]}"
         Device.class_eval{attr_reader :#{key} }
       }
       end
