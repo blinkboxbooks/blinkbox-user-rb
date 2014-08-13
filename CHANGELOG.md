@@ -1,5 +1,13 @@
 # Change log
 
+## 0.2.0 ([#6](https://git.mobcastdev.com/TEST/blinkbox-user/pull/6) 2014-08-12 10:29:41)
+
+Improving and adding Device object for easier API usage
+
+breaking change
+
+Adding device object to hide some of the uglier calls from user.
+
 ## 0.1.0 ([#5](https://git.mobcastdev.com/TEST/blinkbox-user/pull/5) 2014-07-28 14:51:24)
 
 Refactoring and improvements
