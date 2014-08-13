@@ -40,10 +40,10 @@ end
 
 describe User.new({ :grant_type => "password",
                     :username => "test", :password => "password" }, MockClient) do
-  it { is_expected.to respond_to(:get_clients) }
-  it { is_expected.to respond_to(:register_client).with(1).argument }
-  it { is_expected.to respond_to(:deregister_client).with(1).argument }
-  it { is_expected.to respond_to(:deregister_client_all) }
+  it { is_expected.to respond_to(:get_devices) }
+  it { is_expected.to respond_to(:register_device).with(1).argument }
+  it { is_expected.to respond_to(:deregister_device).with(1).argument }
+  it { is_expected.to respond_to(:deregister_all_devices) }
 
   it "Should store authentication data" do
     @user = User.new({ :grant_type => "password",

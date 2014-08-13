@@ -27,30 +27,30 @@ module Blinkbox
         instance_eval %Q{
           @#{key} = "#{res[key]}"
           User.class_eval{attr_reader :#{key} }
-        }
+      }
       end
     end
 
-    def get_clients
+    def get_devices
       @client.get_clients_info @access_token
       @device_clients = []
       @client.last_response(:format => "json")['clients'].each do | dc |
-        @device_clients << Device.new(dc)
+        @device_clients.push(Device.new(dc))
       end
       @device_clients
     end
 
-    def register_client(params)
+    def register_device(params)
       @client.register_client(params, @access_token)
     end
 
-    def deregister_client(client)
-      @client.deregister_client(client.id, @access_token)
+    def deregister_device(device)
+      @client.deregister_client(device.id, @access_token)
     end
 
-    def deregister_client_all(devices)
-      devices.each do | client |
-        deregister_client(client)
+    def deregister_all_devices
+      get_devices.each do | device |
+        deregister_device(device)
       end
     end
   end
