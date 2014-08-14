@@ -19,7 +19,9 @@ module Blinkbox
       @user_credentials = params
 
       @client = client.new(Blinkbox::client_settings.server_uri, Blinkbox::client_settings.proxy_uri)
+    end
 
+    def authenticate
       @client.authenticate(@user_credentials)
       res  = @client.last_response(:format => "json")
 
