@@ -48,6 +48,8 @@ describe User.new({ :grant_type => "password",
   it "Should store authentication data" do
     @user = User.new({ :grant_type => "password",
                        :username => "test", :password => "password" }, MockClient)
+    
+    @user.authenticate
     expect(@user.access_token).to eq(TESTDATA[:access_token])
     expect(@user.token_type).to eq(TESTDATA[:token_type])
     expect(@user.expires_in).to eq(TESTDATA[:expires_in].to_s)
