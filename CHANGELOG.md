@@ -1,5 +1,11 @@
 # Change log
 
+## 0.3.0 ([#7](https://git.mobcastdev.com/TEST/blinkbox-user/pull/7) 2014-08-14 14:22:15)
+
+splitting out authentication at Alex's request
+
+breaking change
+
 ## 0.2.0 ([#6](https://git.mobcastdev.com/TEST/blinkbox-user/pull/6) 2014-08-12 10:29:41)
 
 Improving and adding Device object for easier API usage
