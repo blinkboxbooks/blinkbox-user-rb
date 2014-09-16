@@ -18,5 +18,4 @@ describe ZuulClient.new(SERVER_URI, nil) do
   it { is_expected.to respond_to(:revoke).with(2).arguments }
   it { is_expected.to respond_to(:update_client).with(2).arguments }
   it { is_expected.to respond_to(:update_user).with(2).arguments }
-
 end

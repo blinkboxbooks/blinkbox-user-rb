@@ -1,5 +1,6 @@
 require_relative 'zuulclient'
 require_relative 'device'
+
 module Blinkbox
   class Settings
     attr_reader :server_uri, :proxy_uri
@@ -25,10 +26,10 @@ module Blinkbox
       @client.authenticate(@user_credentials)
       res  = @client.last_response(:format => "json")
 
-      res.keys.each do | key |
+      res.keys.each do |key|
         instance_eval %Q{
           @#{key} = "#{res[key]}"
-          User.class_eval{attr_reader :#{key} }
+          User.class_eval{ attr_reader key.to_sym }
       }
       end
     end
@@ -51,7 +52,7 @@ module Blinkbox
     end
 
     def deregister_all_devices
-      get_devices.each do | device |
+      get_devices.each do |device|
         deregister_device(device)
       end
     end

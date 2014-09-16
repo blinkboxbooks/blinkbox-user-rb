@@ -151,7 +151,6 @@ module Blinkbox
       headers = { "Accept" => "application/json" }.merge(@headers)
       headers["Authorization"] = "Bearer #{access_token}" if access_token
       self.class.send(verb, uri.to_s, headers: headers, query: params)
-      #File.open("last_response_get.html", "w") { |f| f.write(HttpCapture::RESPONSES.last.body) }
       HttpCapture::RESPONSES.last
     end
 
@@ -169,7 +168,6 @@ module Blinkbox
       body_params.reject! { |_, v| v.nil? }
       body_params = URI.encode_www_form(body_params) unless body_params.is_a?(String)
       self.class.send(verb, uri.to_s, headers: headers, body: body_params)
-      #File.open("last_response_send.html", "w") { |f| f.write(HttpCapture::RESPONSES.last.body) }
       HttpCapture::RESPONSES.last
     end
   end
