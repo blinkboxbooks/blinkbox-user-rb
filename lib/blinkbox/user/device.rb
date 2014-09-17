@@ -1,11 +1,11 @@
 module Blinkbox
   class Device
     def initialize(hash)
-      hash.keys.each do | key |
+      hash.keys.each do |key|
         instance_eval %Q{
-        @#{key} = "#{hash[key]}"
-        Device.class_eval{attr_reader :#{key} }
-      }
+          @#{key} = "#{hash[key]}"
+          Device.class_eval{ attr_reader key.to_sym }
+        }
       end
     end
 

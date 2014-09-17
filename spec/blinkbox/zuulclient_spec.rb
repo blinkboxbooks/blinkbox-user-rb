@@ -1,8 +1,6 @@
 require_relative '../spec_helper'
-require_relative '../../lib/blinkbox/zuulclient'
-include Blinkbox
 
-describe ZuulClient.new(SERVER_URI, nil) do
+describe Blinkbox::ZuulClient.new(SERVER_URI, nil) do
   it { is_expected.to respond_to(:get_client_info).with(2).arguments }
   it { is_expected.to respond_to(:get_clients_info).with(1).argument }
   it { is_expected.to respond_to(:authenticate).with(1).argument }
@@ -18,5 +16,4 @@ describe ZuulClient.new(SERVER_URI, nil) do
   it { is_expected.to respond_to(:revoke).with(2).arguments }
   it { is_expected.to respond_to(:update_client).with(2).arguments }
   it { is_expected.to respond_to(:update_user).with(2).arguments }
-
 end

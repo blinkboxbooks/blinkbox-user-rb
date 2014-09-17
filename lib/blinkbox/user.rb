@@ -1,34 +1,28 @@
-require_relative 'zuulclient'
-require_relative 'device'
+require 'blinkbox/user/device'
+require 'blinkbox/user/zuul_client'
+
 module Blinkbox
-  class Settings
-    attr_reader :server_uri, :proxy_uri
-
-    def initialize(params)
-      @server_uri = params[:server_uri] || "https://auth.blinkboxbooks.com"
-      @proxy_uri = params[:proxy_uri] || nil
-    end
-  end
-
-  def client_settings(params = {})
-    @configuration ||= Settings.new(params)
-  end
-
   class User
-    def initialize(params, client = ZuulClient)
-      @user_credentials = params
+    attr_accessor :username, :password, :grant_type
 
-      @client = client.new(Blinkbox::client_settings.server_uri, Blinkbox::client_settings.proxy_uri)
+    def initialize(params, client = ZuulClient)
+      @grant_type = params[:grant_type] || "password"
+      @username = params[:username]
+      @password = params[:password]
+
+      server_uri = params[:server_uri] || "https://auth.dev.bbbtest2.com"
+
+      @client = client.new(server_uri, params[:proxy_uri])
     end
 
     def authenticate
-      @client.authenticate(@user_credentials)
+      @client.authenticate(user_credentials)
       res  = @client.last_response(:format => "json")
 
-      res.keys.each do | key |
+      res.keys.each do |key|
         instance_eval %Q{
           @#{key} = "#{res[key]}"
-          User.class_eval{attr_reader :#{key} }
+          User.class_eval{ attr_reader key.to_sym }
       }
       end
     end
@@ -36,7 +30,7 @@ module Blinkbox
     def get_devices
       @client.get_clients_info @access_token
       @device_clients = []
-      @client.last_response(:format => "json")['clients'].each do | dc |
+      @client.last_response(:format => "json")['clients'].each do |dc|
         @device_clients.push(Device.new(dc))
       end
       @device_clients
@@ -51,9 +45,15 @@ module Blinkbox
     end
 
     def deregister_all_devices
-      get_devices.each do | device |
+      get_devices.each do |device|
         deregister_device(device)
       end
+    end
+
+    private
+
+    def user_credentials
+      { :grant_type => @grant_type, :username => @username, :password => @password }
     end
   end
 end
