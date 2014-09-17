@@ -1,5 +1,11 @@
 # Change log
 
+## 0.3.1 ([#8](https://git.mobcastdev.com/TEST/blinkbox-user/pull/8) 2014-09-17 13:57:09)
+
+Refactor the library to make it much more intuitive
+
+Patch
+
 ## 0.3.0 ([#7](https://git.mobcastdev.com/TEST/blinkbox-user/pull/7) 2014-08-14 14:22:15)
 
 splitting out authentication at Alex's request
