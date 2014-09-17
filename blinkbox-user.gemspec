@@ -1,10 +1,8 @@
 #coding: utf-8
-lib = File.join(__dir__,'lib')
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "blinkbox-user"
-  spec.version       = ::File.read("VERSION")
+  spec.version       = File.read("VERSION")
   spec.authors       = ["blinkbox books"]
   spec.email         = ["alexjo@blinkbox.com", "mustaqila@blinkbox.com"]
   spec.description   = %q{blinkbox ruby user management api}
