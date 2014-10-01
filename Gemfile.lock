@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    blinkbox-user (0.3.0)
+    blinkbox-user (0.3.1)
       http_capture
       httparty
       multi_json
