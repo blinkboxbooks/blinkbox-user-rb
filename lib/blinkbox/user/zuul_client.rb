@@ -10,7 +10,7 @@ module Blinkbox
     def initialize(server_uri, proxy_uri = nil)
       self.class.base_uri(server_uri.to_s)
       self.class.http_proxy(proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password) if proxy_uri
-      self.class.debug_output($stderr)
+      self.class.debug_output($stderr) if ENV['DEBUG']
       @headers = {}
     end
 
