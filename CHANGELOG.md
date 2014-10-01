@@ -1,5 +1,11 @@
 # Change log
 
+## 0.3.2 ([#9](https://git.mobcastdev.com/TEST/blinkbox-user/pull/9) 2014-10-01 13:19:49)
+
+Make the gem much less chatty by default
+
+Patch to make debug output enabled by having the DEBUG environment variable declared.
+
 ## 0.3.1 ([#8](https://git.mobcastdev.com/TEST/blinkbox-user/pull/8) 2014-09-17 13:57:09)
 
 Refactor the library to make it much more intuitive
