@@ -3,16 +3,26 @@ require 'blinkbox/user/zuul_client'
 
 module Blinkbox
   class User
-    attr_accessor :username, :password, :grant_type
+    attr_accessor :username, :password, :grant_type, :first_name, :last_name, :allow_marketing_communications, :accepted_terms_and_conditions
 
     def initialize(params, client = ZuulClient)
       @grant_type = params[:grant_type] || "password"
       @username = params[:username]
       @password = params[:password]
 
+      # Default parameters only used when attempting to register
+      @first_name = params[:first_name] || "Testy"
+      @last_name = params[:last_name] || "McTesterson"
+      @accepted_terms_and_conditions = params[:accepted_terms_and_conditions] || true
+      @allow_marketing_communications = params[:allow_marketing_communications] || false
+
       server_uri = params[:server_uri] || "https://auth.dev.bbbtest2.com"
 
       @client = client.new(server_uri, params[:proxy_uri])
+    end
+
+    def register
+      @client.register_user(self)
     end
 
     def authenticate
