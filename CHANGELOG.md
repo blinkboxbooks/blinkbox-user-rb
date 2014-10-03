@@ -1,5 +1,11 @@
 # Change log
 
+## 0.3.3 ([#10](https://git.mobcastdev.com/TEST/blinkbox-user/pull/10) 2014-10-03 15:35:38)
+
+Extend the Blinkbox::User class to passthrough Register requests to the existing ZuulClient
+
+Patch to extend the Blinkbox::User abstraction to allow user registration via the existing ZuulClient implmentation.
+
 ## 0.3.2 ([#9](https://git.mobcastdev.com/TEST/blinkbox-user/pull/9) 2014-10-01 13:19:49)
 
 Make the gem much less chatty by default
