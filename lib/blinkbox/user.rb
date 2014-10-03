@@ -13,7 +13,7 @@ module Blinkbox
       # Default parameters only used when attempting to register
       @first_name = params[:first_name] || "Testy"
       @last_name = params[:last_name] || "McTesterson"
-      @accepted_terms_and_conditions = params[:accepted_terms_and_conditions] || false
+      @accepted_terms_and_conditions = params[:accepted_terms_and_conditions] || true
       @allow_marketing_communications = params[:allow_marketing_communications] || false
 
       server_uri = params[:server_uri] || "https://auth.dev.bbbtest2.com"
