@@ -1,11 +1,13 @@
 require 'blinkbox/user/device'
 require 'blinkbox/user/zuul_client'
+require 'blinkbox/user/credit_card_service_client'
+require 'blinkbox/user/braintree_encode'
 
 module Blinkbox
   class User
     attr_accessor :username, :password, :grant_type, :first_name, :last_name, :allow_marketing_communications, :accepted_terms_and_conditions
 
-    def initialize(params, client = ZuulClient)
+    def initialize(params, auth_client = ZuulClient, cc_service_client = CreditCardServiceClient)
       @grant_type = params[:grant_type] || "password"
       @username = params[:username]
       @password = params[:password]
@@ -16,18 +18,20 @@ module Blinkbox
       @accepted_terms_and_conditions = params[:accepted_terms_and_conditions] || true
       @allow_marketing_communications = params[:allow_marketing_communications] || false
 
-      server_uri = params[:server_uri] || "https://auth.dev.bbbtest2.com"
+      auth_server_uri = params[:server_uri] || "https://auth.dev.bbbtest2.com"
+      @auth_client = auth_client.new(auth_server_uri, params[:proxy_uri])
 
-      @client = client.new(server_uri, params[:proxy_uri])
+      credit_card_service_uri = params[:credit_card_service_uri] || "https://api.dev.bbbtest2.com"
+      @cc_service_client = cc_service_client.new(credit_card_service_uri,  params[:proxy_uri])
     end
 
     def register
-      @client.register_user(self)
+      @auth_client.register_user(self)
     end
 
     def authenticate
-      @client.authenticate(user_credentials)
-      res  = @client.last_response(:format => "json")
+      @auth_client.authenticate(user_credentials)
+      res  = @auth_client.last_response(:format => "json")
 
       res.keys.each do |key|
         instance_eval %Q{
@@ -38,26 +42,62 @@ module Blinkbox
     end
 
     def get_devices
-      @client.get_clients_info @access_token
+      @auth_client.get_clients_info @access_token
       @device_clients = []
-      @client.last_response(:format => "json")['clients'].each do |dc|
+      @auth_client.last_response(:format => "json")['clients'].each do |dc|
         @device_clients.push(Device.new(dc))
       end
       @device_clients
     end
 
     def register_device(params)
-      @client.register_client(params, @access_token)
+      @auth_client.register_client(params, @access_token)
     end
 
     def deregister_device(device)
-      @client.deregister_client(device.id, @access_token)
+      @auth_client.deregister_client(device.id, @access_token)
     end
 
     def deregister_all_devices
       get_devices.each do |device|
         deregister_device(device)
       end
+    end
+
+    def add_default_credit_card(braintree_public_key, card_type = 'mastercard')
+      cvv = '123'
+
+      if card_type == 'mastercard'
+        card_number = '5555555555554444'
+      elsif card_type == 'visa'
+        card_number = '4111111111111111'
+      elsif card_type == 'amex'
+        card_number = '378282246310005'
+        cvv = '1234'
+      elsif card_type == 'discover'
+        card_number = '6011111111111117'
+      elsif card_type == 'jcb'
+        card_number = '3530111333300000'
+      else
+        fail "Unrecognised card_type: #{card_type}. Please use one of: mastercard, visa, amex, discover, jcb."
+      end
+
+      @encrypted_card_number ||= BraintreeEncryption.encrypt(card_number, braintree_public_key)
+      @encrypted_cvv ||= BraintreeEncryption.encrypt(cvv, braintree_public_key)
+      @encrypted_expiration_month ||= BraintreeEncryption.encrypt('8', braintree_public_key)
+      @necrypted_expiration_year ||= BraintreeEncryption.encrypt('2020', braintree_public_key)
+
+      card_details = {
+          default: true,
+          cc_number: @encrypted_card_number,
+          cvv: @encrypted_cvv,
+          expiration_month: @encrypted_expiration_month,
+          expiration_year: @necrypted_expiration_year,
+          card_holder_name: 'Jimmy Jib',
+          billing_address: {line1:"48 dollis rd", locality:"London", postcode:"n3 1rd"}
+      }
+
+      @cc_service_client.add_credit_card(@access_token, card_details)
     end
 
     private
