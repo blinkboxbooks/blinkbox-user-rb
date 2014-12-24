@@ -70,7 +70,6 @@ module Blinkbox
     end
 
     def register_user(user, client_options = {})
-      'register user'
       params = {
         grant_type: "urn:blinkbox:oauth:grant-type:registration",
         username: user.username,
