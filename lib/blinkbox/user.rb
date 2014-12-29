@@ -2,6 +2,7 @@ require 'blinkbox/user/device'
 require 'blinkbox/user/zuul_client'
 require 'blinkbox/user/credit_card_service_client'
 require 'blinkbox/user/braintree_encode'
+require 'yaml'
 
 module Blinkbox
   class User
@@ -23,6 +24,8 @@ module Blinkbox
 
       credit_card_service_uri = params[:credit_card_service_uri] || "https://api.dev.bbbtest2.com"
       @cc_service_client = cc_service_client.new(credit_card_service_uri,  params[:proxy_uri])
+
+      @braintree_keys = YAML.load_file('config/braintree_keys.yml')
     end
 
     def register
@@ -64,7 +67,8 @@ module Blinkbox
       end
     end
 
-    def add_default_credit_card(braintree_public_key, card_type = 'mastercard')
+    def add_default_credit_card(environment = ENV['SERVER'], card_type = 'mastercard')
+      braintree_public_key = @braintree_keys['braintree_key'][environment]
       cvv = '123'
 
       if card_type == 'mastercard'
