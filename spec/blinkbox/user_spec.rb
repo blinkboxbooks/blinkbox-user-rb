@@ -22,11 +22,11 @@ describe Blinkbox::User do
   end
 
   it "should be able to add a default credit card for a user" do
-    expect(@user).to respond_to(:add_default_credit_card).with(1).argument
+    expect(@user).to respond_to(:add_default_credit_card).with(0).argument
   end
 
   it "should be able to add a default credit card of a specified type for a user" do
-    expect(@user).to respond_to(:add_default_credit_card).with(2).arguments
+    expect(@user).to respond_to(:add_default_credit_card).with(1).arguments
   end
 
   it "Should store authentication data" do
