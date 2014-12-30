@@ -67,23 +67,28 @@ module Blinkbox
       end
     end
 
-    def add_default_credit_card(environment = ENV['SERVER'], card_type = 'mastercard')
-      braintree_public_key = @braintree_keys['braintree_key'][environment]
+    def add_default_credit_card(opts = {})
+      # setting up defaults
+      opts[:braintree_env] = ENV['SERVER'] if  opts[:braintree_env] == nil
+      opts[:braintree_env] = 'dev_int' if  opts[:braintree_env] == nil
+      opts[:card_type] = 'mastercard' if opts[:card_type] == nil
+
+      braintree_public_key = @braintree_keys['braintree_key'][opts[:braintree_env]]
       cvv = '123'
 
-      if card_type == 'mastercard'
+      if opts[:card_type] == 'mastercard'
         card_number = '5555555555554444'
-      elsif card_type == 'visa'
+      elsif opts[:card_type] == 'visa'
         card_number = '4111111111111111'
-      elsif card_type == 'amex'
+      elsif opts[:card_type] == 'amex'
         card_number = '378282246310005'
         cvv = '1234'
-      elsif card_type == 'discover'
+      elsif opts[:card_type] == 'discover'
         card_number = '6011111111111117'
-      elsif card_type == 'jcb'
+      elsif opts[:card_type] == 'jcb'
         card_number = '3530111333300000'
       else
-        fail "Unrecognised card_type: #{card_type}. Please use one of: mastercard, visa, amex, discover, jcb."
+        fail "Unrecognised card_type: #{opts[:card_type]}. Please use one of: mastercard, visa, amex, discover, jcb."
       end
 
       @encrypted_card_number ||= BraintreeEncryption.encrypt(card_number, braintree_public_key)
