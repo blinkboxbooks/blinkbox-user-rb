@@ -32,11 +32,13 @@ module Blinkbox
 
       retries = 10
       card_id = nil
-      while card_id == nil || retries <= 0
+      while card_id == nil and retries > 0
         response = http_post "/service/my/creditcards", body, access_token
         card_id = MultiJson.load(response.body)['id']
         retries-=1
       end
+
+      fail "Adding credit card failed" unless card_id
 
       card_id
     end
