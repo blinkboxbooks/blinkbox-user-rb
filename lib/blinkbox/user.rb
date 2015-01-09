@@ -68,8 +68,8 @@ module Blinkbox
 
     def add_default_credit_card(opts = {})
       # setting up defaults
-      opts[:braintree_env] = ENV['SERVER'] if  opts[:braintree_env] == nil
-      opts[:braintree_env] = 'dev_int' if  opts[:braintree_env] == nil
+      opts[:braintree_env] = ENV['SERVER'] if opts[:braintree_env] == nil
+      opts[:braintree_env] = 'dev_int' if opts[:braintree_env] == nil
       opts[:card_type] = 'mastercard' if opts[:card_type] == nil
 
       braintree_public_key = BRAINTREE_KEYS[opts[:braintree_env].to_sym]

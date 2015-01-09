@@ -30,15 +30,15 @@ module Blinkbox
           billingAddress: card_details[:billing_address]
       }
 
-      retries = 10
+      retries_left = 10
       card_id = nil
-      while card_id == nil and retries > 0
+      while card_id == nil and retries_left > 0
         response = http_post "/service/my/creditcards", body, access_token
         card_id = MultiJson.load(response.body)['id']
-        retries-=1
+        retries_left -= 1
       end
 
-      fail "Adding credit card failed" unless card_id
+      fail 'Adding credit card failed' unless card_id
 
       card_id
     end
@@ -52,7 +52,7 @@ module Blinkbox
     def http_send(verb, uri, post_body, access_token = nil)
       headers = {"Content-Type" => "application/vnd.blinkboxbooks.data.v1+json" }.merge(@headers)
       headers["Authorization"] = "Bearer #{access_token}" if access_token
-       self.class.send(verb, uri.to_s, headers: headers, body: post_body.to_json)
+      self.class.send(verb, uri.to_s, headers: headers, body: post_body.to_json)
       HttpCapture::RESPONSES.last
     end
   end
