@@ -85,17 +85,17 @@ module Blinkbox
 
       cvv = opts[:card_type].eql?('amex') ? '1234' : '123'
 
-      encrypted_card_number ||= BraintreeEncryption.encrypt(card_number, braintree_public_key)
-      encrypted_cvv ||= BraintreeEncryption.encrypt(cvv, braintree_public_key)
-      encrypted_expiration_month ||= BraintreeEncryption.encrypt('8', braintree_public_key)
-      encrypted_expiration_year ||= BraintreeEncryption.encrypt('2020', braintree_public_key)
+      @encrypted_card_number ||= BraintreeEncryption.encrypt(card_number, braintree_public_key)
+      @encrypted_cvv ||= BraintreeEncryption.encrypt(cvv, braintree_public_key)
+      @encrypted_expiration_month ||= BraintreeEncryption.encrypt('8', braintree_public_key)
+      @encrypted_expiration_year ||= BraintreeEncryption.encrypt('2020', braintree_public_key)
 
       card_details = {
           default: true,
-          number: encrypted_card_number,
-          cvv: encrypted_cvv,
-          expirationMonth: encrypted_expiration_month,
-          expirationYear: encrypted_expiration_year,
+          number: @encrypted_card_number,
+          cvv: @encrypted_cvv,
+          expirationMonth: @encrypted_expiration_month,
+          expirationYear: @encrypted_expiration_year,
           cardholderName: 'Jimmy Jib',
           billingAddress: { line1: "48 dollis rd", locality: "London", postcode: "n3 1rd" }
       }
