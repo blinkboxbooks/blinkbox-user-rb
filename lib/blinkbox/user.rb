@@ -24,7 +24,7 @@ module Blinkbox
       @auth_client = auth_client.new(auth_server_uri, params[:proxy_uri])
 
       credit_card_service_uri = params[:credit_card_service_uri] || "https://api.dev.bbbtest2.com"
-      @cc_service_client = cc_service_client.new(credit_card_service_uri,  params[:proxy_uri])
+      @cc_service_client = cc_service_client.new(credit_card_service_uri, params[:proxy_uri])
     end
 
     def register
@@ -33,7 +33,7 @@ module Blinkbox
 
     def authenticate
       @auth_client.authenticate(user_credentials)
-      res  = @auth_client.last_response(:format => "json")
+      res = @auth_client.last_response(:format => "json")
 
       res.keys.each do |key|
         instance_eval %Q{
@@ -81,7 +81,7 @@ module Blinkbox
           'jcb' => '3530111333300000'
       }
       card_number = card_number_map[opts[:card_type]]
-      raise "Unrecognised card_type: #{opts[:card_type]}. Please use one of #{card_number_map.keys}" if card_number.nil?
+      fail "Unrecognised card_type: #{opts[:card_type]}. Please use one of #{card_number_map.keys}" if card_number.nil?
 
       cvv = opts[:card_type].eql?('amex') ? '1234' : '123'
 
@@ -97,7 +97,7 @@ module Blinkbox
           expiration_month: @encrypted_expiration_month,
           expiration_year: @necrypted_expiration_year,
           card_holder_name: 'Jimmy Jib',
-          billing_address: {line1:"48 dollis rd", locality:"London", postcode:"n3 1rd"}
+          billing_address: { line1: "48 dollis rd", locality: "London", postcode: "n3 1rd" }
       }
 
       @cc_service_client.add_credit_card(@access_token, card_details)
@@ -106,7 +106,7 @@ module Blinkbox
     private
 
     def user_credentials
-      { :grant_type => @grant_type, :username => @username, :password => @password }
+      { grant_type: @grant_type, username: @username, password: @password }
     end
   end
 end
