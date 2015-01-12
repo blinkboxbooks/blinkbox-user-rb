@@ -81,7 +81,7 @@ module Blinkbox
           'jcb' => '3530111333300000'
       }
       card_number = card_number_map[opts[:card_type]]
-      raise "Unrecognised card_type: #{opts[:card_type]}. Please use one of: mastercard, visa, amex, discover, jcb." unless card_number
+      raise "Unrecognised card_type: #{opts[:card_type]}. Please use one of #{card_number_map.keys}" if card_number.nil?
 
       cvv = opts[:card_type].eql?('amex') ? '1234' : '123'
 
