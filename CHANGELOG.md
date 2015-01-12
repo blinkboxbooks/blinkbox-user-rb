@@ -1,5 +1,15 @@
 # Change log
 
+## 0.4.0 ([#12](https://git.mobcastdev.com/TEST/blinkbox-user/pull/12) 2015-01-12 12:29:44)
+
+User add credit
+
+New feature / improvement: Adding ability to add a default credit card to the user's account
+https://git.mobcastdev.com/TEST/blinkbox-user/issues/11
+
+--
+Update: Changed to pull braintree key from a config file as suggested by Alex I. I didn't use the TEST_CONFIG from cucumber-blinkbox because it expects all environment data to be under hierarchy of 'server'.
+
 ## 0.3.3 ([#10](https://git.mobcastdev.com/TEST/blinkbox-user/pull/10) 2014-10-03 15:35:38)
 
 Extend the Blinkbox::User class to passthrough Register requests to the existing ZuulClient
