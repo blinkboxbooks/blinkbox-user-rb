@@ -10,7 +10,7 @@ module BraintreeEncryption
     return nil if value.nil?
     return "" if value.respond_to?(:empty?) && value.empty?
 
-    raise "The Braintree client key is not configured" if public_key.nil?
+    fail "The Braintree client key is not configured" if public_key.nil?
     raw_key = Base64.strict_decode64(public_key)
     rsa = OpenSSL::PKey::RSA.new(raw_key)
 
