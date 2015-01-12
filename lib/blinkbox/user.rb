@@ -68,7 +68,7 @@ module Blinkbox
 
     def add_default_credit_card(opts = {})
       # setting up defaults
-      opts[:braintree_env] ||= ENV['SERVER'] || 'dev_int'
+      opts[:braintree_env] ||= ENV['SERVER'] || 'dev'
       opts[:card_type] ||= 'mastercard'
 
       braintree_public_key = BRAINTREE_KEYS[opts[:braintree_env].to_sym]
@@ -85,19 +85,19 @@ module Blinkbox
 
       cvv = opts[:card_type].eql?('amex') ? '1234' : '123'
 
-      @encrypted_card_number ||= BraintreeEncryption.encrypt(card_number, braintree_public_key)
-      @encrypted_cvv ||= BraintreeEncryption.encrypt(cvv, braintree_public_key)
-      @encrypted_expiration_month ||= BraintreeEncryption.encrypt('8', braintree_public_key)
-      @necrypted_expiration_year ||= BraintreeEncryption.encrypt('2020', braintree_public_key)
+      encrypted_card_number ||= BraintreeEncryption.encrypt(card_number, braintree_public_key)
+      encrypted_cvv ||= BraintreeEncryption.encrypt(cvv, braintree_public_key)
+      encrypted_expiration_month ||= BraintreeEncryption.encrypt('8', braintree_public_key)
+      encrypted_expiration_year ||= BraintreeEncryption.encrypt('2020', braintree_public_key)
 
       card_details = {
           default: true,
-          cc_number: @encrypted_card_number,
-          cvv: @encrypted_cvv,
-          expiration_month: @encrypted_expiration_month,
-          expiration_year: @necrypted_expiration_year,
-          card_holder_name: 'Jimmy Jib',
-          billing_address: { line1: "48 dollis rd", locality: "London", postcode: "n3 1rd" }
+          number: encrypted_card_number,
+          cvv: encrypted_cvv,
+          expirationMonth: encrypted_expiration_month,
+          expirationYear: encrypted_expiration_year,
+          cardholderName: 'Jimmy Jib',
+          billingAddress: { line1: "48 dollis rd", locality: "London", postcode: "n3 1rd" }
       }
 
       @cc_service_client.add_credit_card(@access_token, card_details)
