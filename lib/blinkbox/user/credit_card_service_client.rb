@@ -20,17 +20,15 @@ module Blinkbox
     end
 
     def add_credit_card(access_token, card_details = {})
-      created_card_details = {}
-      retries_left = 10
-      (0...retries_left).each do
-        response = http_post "/service/my/creditcards", card_details, access_token
-        created_card_details = MultiJson.load(response.body)
+      response = nil
+      10.times do
+        response = http_post("/service/my/creditcards", card_details, access_token)
         break if response.successful?
       end
-
       fail 'Adding credit card failed' unless response.successful?
 
-      created_card_details
+      #return details of the newly added card
+      MultiJson.load(response.body)
     end
 
     private
