@@ -1,5 +1,13 @@
 # Change log
 
+## 0.5.0 ([#16](https://git.mobcastdev.com/TEST/blinkbox-user/pull/16) 2015-01-14 13:49:21)
+
+new feature: Return created card details; some code cleanup
+
+- new feature: card details are needed by the client (e.g. to verify cardholder name or visa type)
+- pass card details in expected format (keys of the card_details hash) from User class to CCclient class, so that we do not have to re-process them
+- minor clean up
+
 ## 0.4.0 ([#12](https://git.mobcastdev.com/TEST/blinkbox-user/pull/12) 2015-01-12 12:29:44)
 
 User add credit
