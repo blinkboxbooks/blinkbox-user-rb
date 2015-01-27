@@ -1,5 +1,11 @@
 # Change log
 
+## 0.5.3 ([#20](https://git.mobcastdev.com/TEST/blinkbox-user/pull/20) 2015-01-27 16:22:26)
+
+patch handle error response from register call
+
+patch
+
 ## 0.5.2 ([#19](https://git.mobcastdev.com/TEST/blinkbox-user/pull/19) 2015-01-27 16:01:40)
 
 minor patch to simplify
