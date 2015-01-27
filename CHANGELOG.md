@@ -1,5 +1,11 @@
 # Change log
 
+## 0.5.2 ([#19](https://git.mobcastdev.com/TEST/blinkbox-user/pull/19) 2015-01-27 16:01:40)
+
+minor patch to simplify
+
+patch
+
 ## 0.5.1 ([#18](https://git.mobcastdev.com/TEST/blinkbox-user/pull/18) 2015-01-27 15:43:46)
 
 Blinkbox::User#register_device should take in Hash and convert to Device object internally - improvement
