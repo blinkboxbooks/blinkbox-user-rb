@@ -27,8 +27,8 @@ module Blinkbox
       @cc_service_client = cc_service_client.new(credit_card_service_uri, params[:proxy_uri])
     end
 
-    def register
-      @auth_client.register_user(self)
+    def register(client_options = {})
+      @auth_client.register_user(self, client_options)
     end
 
     def authenticate
