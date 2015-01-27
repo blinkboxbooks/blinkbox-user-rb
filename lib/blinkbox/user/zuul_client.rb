@@ -80,8 +80,7 @@ module Blinkbox
         allow_marketing_communications: user.allow_marketing_communications
       }
       params.merge!(client_options)
-      response = http_post "/oauth2/token", params
-      response.response != 200 ? response.response : MultiJson.load(response.body)
+      http_post "/oauth2/token", params
     end
 
     def register_user_with_client(user, client)
