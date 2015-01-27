@@ -1,5 +1,15 @@
 # Change log
 
+## 0.5.1 ([#18](https://git.mobcastdev.com/TEST/blinkbox-user/pull/18) 2015-01-27 15:43:46)
+
+Blinkbox::User#register_device should take in Hash and convert to Device object internally - improvement
+
+patch: #register_device currently requires usage of its internal class Device instead of conveniently accepting properties as a Hash. Was discovered with the first usage of #register_device method in https://git.mobcastdev.com/TEST/website-test/pull/621
+
+Blinkbox::User.register_device should take in hash and convert it into the Device object before calling upon ZuulClient
+
+website-test will adopt to changes in https://git.mobcastdev.com/TEST/website-test/pull/625
+
 ## 0.5.0 ([#16](https://git.mobcastdev.com/TEST/blinkbox-user/pull/16) 2015-01-14 13:49:21)
 
 new feature: Return created card details; some code cleanup
