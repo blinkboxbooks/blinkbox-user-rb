@@ -53,7 +53,7 @@ module Blinkbox
     end
 
     def register_device(params)
-      @auth_client.register_client(params, @access_token)
+      @auth_client.register_client(Blinkbox::Device.new(params), @access_token)
     end
 
     def deregister_device(device)
