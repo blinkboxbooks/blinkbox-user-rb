@@ -1,0 +1,13 @@
+language: ruby
+rvm:
+  - 2.0.0
+  - 2.1.2
+deploy:
+  provider: rubygems
+  api_key:
+    secure: Hi80m72FB84rM5UNABLXAgyh11J1ETer+2sbZkMtqxAaB92DMdtSQ8qNjUH7hP+KLxbgWwfLxw+YRQFAiZXz/9S+D036XBkpr1WqXQNq8qBYFojK3ljrbXXfyOdT5p4CdIEtDs217wEmBaDSkbf6lkQhyh0g9Vpc/M2hdbWC2wA=
+  gem: blinkbox-user
+  on:
+    repo: blinkboxbooks/blinkbox-user.rb
+    rvm: 2.1.2
+    branch: master
